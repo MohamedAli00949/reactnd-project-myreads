@@ -114,8 +114,7 @@ class BooksApp extends React.Component {
         <Route path='/search' render={() => 
           <SearchPage 
             myBooks={ this.state.books }
-            // onUpdateShilf={this.updateShelf}
-            // onCkeckShelf={this.ckeckShelf(this.state.book)}
+            onUpdateShilf={this.updateShelf}
           />}></Route>
       </div>
       
