@@ -23,7 +23,7 @@ class SearchPage extends React.Component {
         query: '',
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         BooksAPI.getAll().then( (books) => {
             this.setState({
                 myBooks: books,
@@ -43,6 +43,7 @@ class SearchPage extends React.Component {
         if (query.length !== 0) {
             BooksAPI.search(query, 50).then((searchResults) => {
                 if(searchResults && searchResults.length > 0) {
+                    searchResults.map((book) => book.shelf = 'none' )
                     myBooks.map((myBook) => {
                         const findIndex = searchResults.findIndex(b => b.id === myBook.id)
                         if (searchResults[findIndex]) {
@@ -90,6 +91,7 @@ class SearchPage extends React.Component {
                                 searchedBooks.map((book) => (
                                 <li key={book.id}>
                                     <Books
+                                        myBooks={ searchedBooks }
                                         myBook={ book }
                                         onUpdateShilf={this.props.onUpdateShilf}
                                     />

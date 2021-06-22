@@ -17,7 +17,6 @@ class Books extends React.Component {
      * This component take onUpdateShelf function property to update changes at select options for any book at this app.
      */
 
-
     render () {
         const { onUpdateShilf, myBook } = this.props;
         return (
@@ -36,10 +35,9 @@ class Books extends React.Component {
                             <option value="currentlyReading">Currently Reading</option>
                             <option value="wantToRead">Want to Read</option>
                             <option value="read">Read</option>
-                            <option value="none" selected>None</option>
+                            <option value="none" className='none-option'>None</option>
                         </select>
                     </div>
-
                 </div>
                 <div className="book-title">{myBook.title}</div>
                 <div className="book-authors">{myBook.authors}</div>

@@ -14,6 +14,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     books: [],
+    book: {},
   }
 
   /**
@@ -21,27 +22,31 @@ class BooksApp extends React.Component {
    * When this Component is render, It return 3 shelfs of books 
    * When this component is run, componentDidMount lifecycle event and updateSelf function is run.  
    */
-  componentDidMount() {
-    BooksAPI.getAll().then( (myBooks) => {
-        this.setState({
-          books: myBooks,
-        })
-    });
-  }
+  
+
+  // ckeckShelf = (myBook) =>{
+  //   const none = document.querySelector('.none-option');
+  //   if (myBook.shelf === 'undefined') {
+  //     none.setAttribute('selected', '');
+  //   }
+  // }
 
   /**
    * this function runs to update shelfs on adding any book to its selected shelf, it checks if the book is already on that shelf.
    */
   updateShelf = (myAddedBook, shelf) => {
-      BooksAPI.update(myAddedBook, shelf).then(() =>{
-          myAddedBook.shelf = shelf
+    BooksAPI.update(myAddedBook, shelf).then(() => {
+      BooksAPI.getAll().then((myBooks) => {
+        this.setState({books:myBooks})
       })
+    })
 
-      let myAddedBooks = this.state.books.filter( myBook => myBook.id !== myAddedBook.id )
+  }
 
-      myAddedBooks.push(myAddedBook);
-      this.setState({ books: myAddedBooks })
-      this.componentDidMount()
+  componentDidMount() {
+    BooksAPI.getAll().then( (myBooks) => {
+      this.setState({ books: myBooks })
+    })  
   }
 
   render() {
@@ -63,7 +68,6 @@ class BooksApp extends React.Component {
                           myBooks={ this.state.books }
                           myBook={ book }
                           onUpdateShilf={this.updateShelf}
-
                         />
                       </li>
                     ))}
@@ -110,7 +114,8 @@ class BooksApp extends React.Component {
         <Route path='/search' render={() => 
           <SearchPage 
             myBooks={ this.state.books }
-            onUpdateShilf={this.updateShelf}
+            // onUpdateShilf={this.updateShelf}
+            // onCkeckShelf={this.ckeckShelf(this.state.book)}
           />}></Route>
       </div>
       
